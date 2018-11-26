@@ -1,0 +1,28 @@
+﻿create table leitores(
+	nleitor int identity primary key,
+	nome varchar(40) not null,
+	data_nasc date,
+	fotografia image,
+	ativo bit
+)
+
+create table livros(
+	nlivro int identity primary key,
+	nome varchar(100),
+	ano int,
+	data_aquisicao date,
+	preco decimal(4,2),
+	capa varchar(300),
+	estado bit
+)
+
+create table emprestimos(
+	nemprestimo int identity primary key,
+	nlivro int references livros(nlivro),
+	nleitor int references leitores(nleitor),
+	data_emprestimo date,
+	data_devolve date,
+	estado bit
+)
+
+Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\pjcfe\Documents\M14_15_trabalhomodelo_2018_19.mdf;Integrated Security=True;Connect Timeout=30
