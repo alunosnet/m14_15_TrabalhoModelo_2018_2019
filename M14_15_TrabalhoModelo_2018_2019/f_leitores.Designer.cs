@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_nome = new System.Windows.Forms.TextBox();
             this.dtp_data = new System.Windows.Forms.DateTimePicker();
@@ -43,8 +44,15 @@
             this.dgv_lista = new System.Windows.Forms.DataGridView();
             this.txt_pesquisa = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.detalhesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.pb_foto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_lista)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -59,6 +67,7 @@
             // txt_nome
             // 
             this.txt_nome.Location = new System.Drawing.Point(128, 96);
+            this.txt_nome.MaxLength = 40;
             this.txt_nome.Name = "txt_nome";
             this.txt_nome.Size = new System.Drawing.Size(200, 20);
             this.txt_nome.TabIndex = 1;
@@ -135,6 +144,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Adicionar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -156,9 +166,13 @@
             // 
             // dgv_lista
             // 
+            this.dgv_lista.AllowUserToAddRows = false;
+            this.dgv_lista.AllowUserToDeleteRows = false;
             this.dgv_lista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_lista.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_lista.Location = new System.Drawing.Point(351, 96);
             this.dgv_lista.Name = "dgv_lista";
+            this.dgv_lista.ReadOnly = true;
             this.dgv_lista.Size = new System.Drawing.Size(183, 211);
             this.dgv_lista.TabIndex = 7;
             // 
@@ -177,6 +191,49 @@
             this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 0;
             this.label5.Text = "Pesquisar";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.detalhesToolStripMenuItem,
+            this.editarToolStripMenuItem,
+            this.removerToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.cancelarToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 120);
+            // 
+            // detalhesToolStripMenuItem
+            // 
+            this.detalhesToolStripMenuItem.Name = "detalhesToolStripMenuItem";
+            this.detalhesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.detalhesToolStripMenuItem.Text = "Detalhes";
+            this.detalhesToolStripMenuItem.Click += new System.EventHandler(this.detalhesToolStripMenuItem_Click);
+            // 
+            // editarToolStripMenuItem
+            // 
+            this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
+            this.editarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editarToolStripMenuItem.Text = "Editar";
+            this.editarToolStripMenuItem.Click += new System.EventHandler(this.editarToolStripMenuItem_Click);
+            // 
+            // removerToolStripMenuItem
+            // 
+            this.removerToolStripMenuItem.Name = "removerToolStripMenuItem";
+            this.removerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removerToolStripMenuItem.Text = "Remover";
+            this.removerToolStripMenuItem.Click += new System.EventHandler(this.removerToolStripMenuItem_Click);
+            // 
+            // cancelarToolStripMenuItem
+            // 
+            this.cancelarToolStripMenuItem.Name = "cancelarToolStripMenuItem";
+            this.cancelarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cancelarToolStripMenuItem.Text = "Cancelar";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // f_leitores
             // 
@@ -205,6 +262,7 @@
             this.Text = "Leitores";
             ((System.ComponentModel.ISupportInitialize)(this.pb_foto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_lista)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,5 +285,11 @@
         private System.Windows.Forms.DataGridView dgv_lista;
         private System.Windows.Forms.TextBox txt_pesquisa;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem detalhesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem cancelarToolStripMenuItem;
     }
 }
