@@ -19,11 +19,6 @@ namespace M14_15_TrabalhoModelo_2018_2019
             this.bd = bd;
             atualizarListaLeitores();
         }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
         //escolher a fotografia
         private void button1_Click(object sender, EventArgs e)
         {
@@ -84,8 +79,7 @@ namespace M14_15_TrabalhoModelo_2018_2019
         private void atualizarListaLeitores()
         {
             //consulta à bd
-            string sql = "SELECT nleitor,nome,ativo from leitores";
-            dgv_lista.DataSource = bd.devolveSQL(sql);
+            dgv_lista.DataSource = Leitor.listaTodosLeitores(bd);
         }
         //mostrar detalhes do leitor selecionado
         private void detalhesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -96,8 +90,8 @@ namespace M14_15_TrabalhoModelo_2018_2019
                 MessageBox.Show("Tem de selecionar um leitor da lista");
                 return;
             }
-            string sql = "Select * from leitores where nleitor=" + nleitor;
-            DataTable leitor = bd.devolveSQL(sql);
+            Leitor lt = new Leitor();
+            DataTable leitor = lt.pesquisaPorNLeitor(nleitor,bd);
             //mostrar no form o leitor
             //nome
             txt_nome.Text = leitor.Rows[0]["nome"].ToString();
@@ -121,23 +115,35 @@ namespace M14_15_TrabalhoModelo_2018_2019
                 return;
             }
             //confirmar
-            string sql = "select nome from leitores where nleitor=" + nleitor;
-            DataTable leitor = bd.devolveSQL(sql);
-            string nome = leitor.Rows[0][0].ToString();
+            Leitor lt = new Leitor();
+            lt.pesquisaPorNLeitor(nleitor, bd);
+            string nome = lt.nome;
             DialogResult resposta;
             resposta=MessageBox.Show("Tem a certeza que pretende remover o leitor " + nome,
                     "Remover",MessageBoxButtons.YesNo);
             if (resposta == DialogResult.No)
                 return;
-            sql = "Delete from leitores where nleitor=" + nleitor;
-            bd.executaSQL(sql);
+
+            Leitor.removerLeitor(nleitor, bd);
+            
             //atualizar a lista
             atualizarListaLeitores();
         }
         //editar leitor selecionado
         private void editarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //nr do leitor selecionado para editar
+            int nleitor = nleitorSelecionado();
+            if (nleitor == -1)
+            {
+                MessageBox.Show("Tem de selecionar um leitor da lista");
+                return;
+            }
+            //abrir form editar
+            f_editar_leitor f = new f_editar_leitor(nleitor,bd);
+            f.ShowDialog();
+            //atualizar grelha
+            atualizarListaLeitores();
         }
 
         int nleitorSelecionado()
@@ -149,6 +155,18 @@ namespace M14_15_TrabalhoModelo_2018_2019
             }
             int nleitor = int.Parse(dgv_lista.Rows[linha].Cells[0].Value.ToString());
             return nleitor;
+        }
+        //pesquisar
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string nome = txt_pesquisa.Text;
+            dgv_lista.DataSource = Leitor.pesquisaPorNome(nome,bd);
+        }
+
+        private void txt_pesquisa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+                button4_Click(null, null);
         }
     }
 }

@@ -80,5 +80,18 @@ namespace M14_15_TrabalhoModelo_2018_2019
             comando = null;
             return registos;
         }
+
+        public DataTable devolveSQL(string sql, List<SqlParameter> parametros)
+        {
+            SqlCommand comando = new SqlCommand(sql, ligacaoBD);
+            DataTable registos = new DataTable();
+            comando.Parameters.AddRange(parametros.ToArray());
+            SqlDataReader dados = comando.ExecuteReader();
+            registos.Load(dados);
+            dados = null;
+            comando.Dispose();
+            comando = null;
+            return registos;
+        }
     }
 }
