@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace M14_15_TrabalhoModelo_2018_2019
 {
@@ -18,6 +19,13 @@ namespace M14_15_TrabalhoModelo_2018_2019
             fs.Write(imagem, 0, imagem.GetUpperBound(0));
             fs.Close();
         }
-
+        static public string pastaDoPrograma()
+        {
+            string pastaInicial = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            pastaInicial += @"\M14_15_TrabalhoModelo";
+            if (System.IO.Directory.Exists(pastaInicial) == false)
+                System.IO.Directory.CreateDirectory(pastaInicial);
+            return pastaInicial;
+        }
     }
 }

@@ -40,5 +40,17 @@ namespace M14_15_TrabalhoModelo_2018_2019
         {
             AbrirFormLeitores();
         }
+
+        private void livrosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            f_livros f = new f_livros(bd);
+            f.Show();
+        }
+
+        private void empréstimosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            f_emprestimo f = new f_emprestimo(bd);
+            f.Show();
+        }
     }
 }

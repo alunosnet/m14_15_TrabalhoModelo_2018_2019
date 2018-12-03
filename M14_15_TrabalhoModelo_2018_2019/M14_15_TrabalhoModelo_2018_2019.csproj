@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDados.cs" />
+    <Compile Include="Emprestimo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +60,18 @@
     </Compile>
     <Compile Include="f_editar_leitor.Designer.cs">
       <DependentUpon>f_editar_leitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="f_editar_livro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="f_editar_livro.Designer.cs">
+      <DependentUpon>f_editar_livro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="f_emprestimo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="f_emprestimo.Designer.cs">
+      <DependentUpon>f_emprestimo.cs</DependentUpon>
     </Compile>
     <Compile Include="f_leitores.cs">
       <SubType>Form</SubType>
@@ -82,6 +95,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="f_editar_leitor.resx">
       <DependentUpon>f_editar_leitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="f_editar_livro.resx">
+      <DependentUpon>f_editar_livro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="f_emprestimo.resx">
+      <DependentUpon>f_emprestimo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="f_leitores.resx">
       <DependentUpon>f_leitores.cs</DependentUpon>

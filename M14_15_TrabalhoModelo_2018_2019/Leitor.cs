@@ -14,6 +14,11 @@ namespace M14_15_TrabalhoModelo_2018_2019
         public bool ativo;
 
         public Leitor() { }
+        public Leitor(int nleitor,string nome)
+        {
+            this.nleitor=nleitor;
+            this.nome=nome;
+        }
         public Leitor(string nome, DateTime data_nasc, byte[] fotografia)
         {
             this.nome = nome;
@@ -21,7 +26,11 @@ namespace M14_15_TrabalhoModelo_2018_2019
             this.fotografia = fotografia;
             ativo = true;
         }
-
+        //para mostrar na Combobox o nome do leitor
+        public override string ToString()
+        {
+            return nome;
+        }
         public void adicionar(BaseDados bd)
         {
             string sql;

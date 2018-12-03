@@ -42,7 +42,7 @@
             this.txtAno = new System.Windows.Forms.TextBox();
             this.txtPreco = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvLista = new System.Windows.Forms.DataGridView();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -52,13 +52,13 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cancelarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbCapa)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLista)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(142, 333);
+            this.button1.Location = new System.Drawing.Point(179, 331);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(91, 31);
             this.button1.TabIndex = 0;
@@ -93,7 +93,8 @@
             // 
             this.pbCapa.Location = new System.Drawing.Point(12, 229);
             this.pbCapa.Name = "pbCapa";
-            this.pbCapa.Size = new System.Drawing.Size(111, 135);
+            this.pbCapa.Size = new System.Drawing.Size(134, 135);
+            this.pbCapa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbCapa.TabIndex = 4;
             this.pbCapa.TabStop = false;
             // 
@@ -158,7 +159,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(142, 389);
+            this.button2.Location = new System.Drawing.Point(179, 387);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 31);
             this.button2.TabIndex = 0;
@@ -166,13 +167,17 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // dataGridView1
+            // dgvLista
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(292, 70);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(155, 294);
-            this.dataGridView1.TabIndex = 5;
+            this.dgvLista.AllowUserToAddRows = false;
+            this.dgvLista.AllowUserToDeleteRows = false;
+            this.dgvLista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLista.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgvLista.Location = new System.Drawing.Point(292, 70);
+            this.dgvLista.Name = "dgvLista";
+            this.dgvLista.ReadOnly = true;
+            this.dgvLista.Size = new System.Drawing.Size(155, 294);
+            this.dgvLista.TabIndex = 5;
             // 
             // textBox4
             // 
@@ -241,7 +246,7 @@
             this.ClientSize = new System.Drawing.Size(475, 450);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvLista);
             this.Controls.Add(this.pbCapa);
             this.Controls.Add(this.txtPreco);
             this.Controls.Add(this.txtAno);
@@ -261,7 +266,7 @@
             this.Name = "f_livros";
             this.Text = "f_livros";
             ((System.ComponentModel.ISupportInitialize)(this.pbCapa)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLista)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -283,7 +288,7 @@
         private System.Windows.Forms.TextBox txtAno;
         private System.Windows.Forms.TextBox txtPreco;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvLista;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
