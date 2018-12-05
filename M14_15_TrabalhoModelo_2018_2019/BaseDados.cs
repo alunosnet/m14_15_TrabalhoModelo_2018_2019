@@ -48,6 +48,11 @@ namespace M14_15_TrabalhoModelo_2018_2019
             }
             catch { }
         }
+        //iniciar uma transação
+        public SqlTransaction iniciarTransacao()
+        {
+            return ligacaoBD.BeginTransaction();
+        }
         public void executaSQL(string sql)
         {
             SqlCommand comando = new SqlCommand(sql, ligacaoBD);
@@ -60,6 +65,15 @@ namespace M14_15_TrabalhoModelo_2018_2019
         {
             SqlCommand comando = new SqlCommand(sql, ligacaoBD);
             comando.Parameters.AddRange(parametros.ToArray());
+            comando.ExecuteNonQuery();
+            comando.Dispose();
+            comando = null;
+        }
+        public void executaSQL(string sql, List<SqlParameter> parametros,SqlTransaction transacao)
+        {
+            SqlCommand comando = new SqlCommand(sql, ligacaoBD);
+            comando.Parameters.AddRange(parametros.ToArray());
+            comando.Transaction = transacao;
             comando.ExecuteNonQuery();
             comando.Dispose();
             comando = null;

@@ -16,7 +16,7 @@ namespace M14_15_TrabalhoModelo_2018_2019
         public DateTime data_aquisicao;
         public decimal preco;
         public string capa;
-        public bool estado;
+        public bool estado; //1-disponivel 0-emprestado
 
         public Livro() { }
         public Livro(int nlivro,string nome)
@@ -80,6 +80,11 @@ namespace M14_15_TrabalhoModelo_2018_2019
         public static DataTable listaTodosLivrosDisponiveis(BaseDados bd)
         {
             string sql = "SELECT nlivro,nome,estado from livros where estado=1";
+            return bd.devolveSQL(sql);
+        }
+        public static DataTable listaTodosLivrosEmprestados(BaseDados bd)
+        {
+            string sql = "SELECT nlivro,nome,estado from livros where estado=0";
             return bd.devolveSQL(sql);
         }
         public DataTable pesquisaPorNLivro(int nlivro, BaseDados bd)

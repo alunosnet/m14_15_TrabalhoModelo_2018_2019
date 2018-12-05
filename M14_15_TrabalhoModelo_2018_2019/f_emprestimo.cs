@@ -54,5 +54,28 @@ namespace M14_15_TrabalhoModelo_2018_2019
                 cbLivros.Items.Add(lv);
             }
         }
+        //emprestar
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //validar
+            if (cbLeitores.SelectedIndex == -1)
+            {
+                MessageBox.Show("Tem de selecionar um leitor");
+                return;
+            }
+            if (cbLivros.SelectedIndex == -1)
+            {
+                MessageBox.Show("Tem de selecionar um livro");
+                return;
+            }
+            Livro lvSelecionado = cbLivros.SelectedItem as Livro;
+            Leitor ltSelecionado = cbLeitores.SelectedItem as Leitor;
+            DateTime dataDevolve = dtpDevolve.Value;
+            Emprestimo emprestimo = new Emprestimo(lvSelecionado.nlivro,
+                ltSelecionado.nleitor, dataDevolve);
+            emprestimo.adicionar(bd);
+            //refresh da combo livros
+            preencheCBLivros();
+        }
     }
 }

@@ -13,12 +13,31 @@ namespace M14_15_TrabalhoModelo_2018_2019
     public partial class f_leitores : Form
     {
         BaseDados bd;
+        int nrlinhas = 0;
+        int nrpagina = 1;
+        const int registosPorPagina = 5;
+
         public f_leitores(BaseDados bd)
         {
             InitializeComponent();
             this.bd = bd;
+            //atualizar a combobox com nr de páginas
+            atualizaNrPaginas();
             atualizarListaLeitores();
+            
         }
+
+        private void atualizaNrPaginas()
+        {
+            cb_pagina.Items.Clear();
+            int nrLeitores = Leitor.NrDeLeitores(bd);
+            int nrPaginas =(int)Math.Ceiling(nrLeitores /(float) registosPorPagina);
+            for (int i = 1; i <= nrPaginas; i++)
+                cb_pagina.Items.Add(i);
+
+            cb_pagina.SelectedIndex = 0;
+        }
+
         //escolher a fotografia
         private void button1_Click(object sender, EventArgs e)
         {
@@ -73,13 +92,24 @@ namespace M14_15_TrabalhoModelo_2018_2019
             txt_nome.Clear();
             pb_foto.ImageLocation = null;
             //atualizar a grelha
+            atualizaNrPaginas();
             atualizarListaLeitores();
         }
 
         private void atualizarListaLeitores()
         {
             //consulta à bd
-            dgv_lista.DataSource = Leitor.listaTodosLeitores(bd);
+            if(cb_pagina.SelectedIndex==-1)
+                dgv_lista.DataSource = Leitor.listaTodosLeitores(bd);
+            else
+            {
+                int nrpagina = cb_pagina.SelectedIndex + 1;
+                int primeiroregisto = (nrpagina - 1) * registosPorPagina + 1;
+                int ultimoregisto = primeiroregisto + registosPorPagina-1;
+                dgv_lista.DataSource = Leitor.listaTodosLeitores(bd,
+                    primeiroregisto, ultimoregisto);
+
+            }
         }
         //mostrar detalhes do leitor selecionado
         private void detalhesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,6 +158,7 @@ namespace M14_15_TrabalhoModelo_2018_2019
             
             //atualizar a lista
             atualizarListaLeitores();
+            atualizaNrPaginas();
         }
         //editar leitor selecionado
         private void editarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,6 +198,101 @@ namespace M14_15_TrabalhoModelo_2018_2019
         {
             if (e.KeyChar == (char)13)
                 button4_Click(null, null);
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            imprimeGrelha(e, dgv_lista);
+        }
+        private void imprimeGrelha(System.Drawing.Printing.PrintPageEventArgs e, DataGridView grelha)
+        {
+            Graphics impressora = e.Graphics;
+            Font tipoLetra = new Font("Arial", 10);
+            Font tipoLetraMaior = new Font("Arial", 12, FontStyle.Bold);
+            Brush cor = Brushes.Black;
+            float mesquerda, mdireita, msuperior, minferior, linha, largura;
+            Pen caneta = new Pen(cor, 2);
+
+            //margens
+            mesquerda = printDocument1.DefaultPageSettings.Margins.Left;
+            mdireita = printDocument1.DefaultPageSettings.Bounds.Right - mesquerda;
+            msuperior = printDocument1.DefaultPageSettings.Margins.Top;
+            minferior = printDocument1.DefaultPageSettings.Bounds.Height - msuperior;
+            largura = mdireita - mesquerda;
+            //calcular as colunas da grelha
+            float[] colunas = new float[grelha.Columns.Count];
+            float lgrelha = 0;
+            for (int i = 0; i < grelha.Columns.Count; i++)
+                lgrelha += grelha.Columns[i].Width;
+            colunas[0] = mesquerda;
+            float total = mesquerda, larguraColuna;
+            for (int i = 0; i < grelha.Columns.Count - 1; i++)
+            {
+                larguraColuna = grelha.Columns[i].Width / lgrelha;
+                colunas[i + 1] = larguraColuna * largura + total;
+                total = colunas[i + 1];
+            }
+            //cabeçalhos
+            for (int i = 0; i < grelha.Columns.Count; i++)
+            {
+                impressora.DrawString(grelha.Columns[i].HeaderText, tipoLetraMaior, cor, colunas[i], msuperior);
+            }
+            linha = msuperior + tipoLetraMaior.Height;
+            //ciclo para percorrer a grelha
+            int l;
+            for (l = nrlinhas; l < grelha.Rows.Count; l++)
+            {
+                //desenhar linha
+                impressora.DrawLine(caneta, mesquerda, linha, mdireita, linha);
+                //escrever uma linha
+                for (int c = 0; c < grelha.Columns.Count; c++)
+                {
+                    impressora.DrawString(grelha.Rows[l].Cells[c].Value.ToString(),
+                        tipoLetra, cor, colunas[c], linha);
+                }
+                //avançar para linha seguinte
+                linha = linha + tipoLetra.Height;
+                //verificar se o papel acabou
+                if (linha + tipoLetra.Height > minferior)
+                    break;
+            }
+            //tem mais páginas?
+            if (l < grelha.Rows.Count)
+            {
+                nrlinhas = l + 1;
+                e.HasMorePages = true;
+            }
+            //rodapé
+            impressora.DrawString("12ºH- Página " + nrpagina.ToString(), tipoLetra, cor, mesquerda, minferior);
+            //nr página
+            nrpagina++;
+            //linhas
+            //linha superior
+            impressora.DrawLine(caneta, mesquerda, msuperior, mdireita, msuperior);
+            //linha inferior
+            impressora.DrawLine(caneta, mesquerda, linha, mdireita, linha);
+            //colunas
+            for (int c = 0; c < colunas.Length; c++)
+            {
+                impressora.DrawLine(caneta, colunas[c], msuperior, colunas[c], linha);
+            }
+            //linha lado direito
+            impressora.DrawLine(caneta, mdireita, msuperior, mdireita, linha);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            nrlinhas = 0;
+            nrpagina = 1;
+            //só imprimir
+            //printDocument1.Print();
+            //previsualizar a impressão
+            printPreviewDialog1.ShowDialog();
+        }
+
+        private void cb_pagina_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            atualizarListaLeitores();
         }
     }
 }

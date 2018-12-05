@@ -31,6 +31,14 @@ namespace M14_15_TrabalhoModelo_2018_2019
         {
             return nome;
         }
+        static public int NrDeLeitores(BaseDados bd)
+        {
+            string sql = "Select count(*) as nr from leitores";
+            DataTable dados = bd.devolveSQL(sql);
+            int nr = int.Parse(dados.Rows[0][0].ToString());
+            dados.Dispose();
+            return nr;
+        }
         public void adicionar(BaseDados bd)
         {
             string sql;
@@ -57,6 +65,16 @@ namespace M14_15_TrabalhoModelo_2018_2019
         public static DataTable listaTodosLeitores(BaseDados bd)
         {
             string sql = "SELECT nleitor,nome,ativo from leitores";
+            return bd.devolveSQL(sql);
+        }
+        public static DataTable listaTodosLeitores(BaseDados bd,
+            int primeiroregisto,int ultimoregisto)
+        {
+            string sql = $@"SELECT nleitor,nome,ativo from 
+                    (select row_number() over (order by nleitor) as num,
+                        nleitor,nome,ativo from leitores) as p
+                        WHERE num>={primeiroregisto} and
+                        num<={ultimoregisto}";
             return bd.devolveSQL(sql);
         }
         public DataTable pesquisaPorNLeitor(int nleitor, BaseDados bd)

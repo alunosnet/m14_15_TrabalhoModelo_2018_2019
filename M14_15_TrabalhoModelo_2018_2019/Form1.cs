@@ -17,6 +17,8 @@ namespace M14_15_TrabalhoModelo_2018_2019
         public Form1()
         {
             InitializeComponent();
+            //listar os livros emprestados
+            dataGridView1.DataSource = Emprestimo.ListaEmprestimos(bd);
         }
         //sair do programa
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,7 +52,17 @@ namespace M14_15_TrabalhoModelo_2018_2019
         private void empréstimosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             f_emprestimo f = new f_emprestimo(bd);
-            f.Show();
+            f.ShowDialog();
+            //listar os livros emprestados
+            dataGridView1.DataSource = Emprestimo.ListaEmprestimos(bd);
+        }
+
+        private void devolverToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            f_devolve f = new f_devolve(bd);
+            f.ShowDialog();
+            //listar os livros emprestados
+            dataGridView1.DataSource = Emprestimo.ListaEmprestimos(bd);
         }
     }
 }
