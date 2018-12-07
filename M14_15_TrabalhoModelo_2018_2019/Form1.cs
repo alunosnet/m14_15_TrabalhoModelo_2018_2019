@@ -64,5 +64,11 @@ namespace M14_15_TrabalhoModelo_2018_2019
             //listar os livros emprestados
             dataGridView1.DataSource = Emprestimo.ListaEmprestimos(bd);
         }
+
+        private void consultasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            f_consultas f = new f_consultas(bd);
+            f.Show();
+        }
     }
 }
