@@ -16,7 +16,7 @@ namespace M14_15_TrabalhoModelo_2018_2019
 {
     public class BaseDados
     {
-        private string bdName = "M14_15_trabalhomodelo_2018_19.mdf";
+        private string bdName = "M14_15_trabalhomodelo_2018_19_v2.mdf";
         private string caminho;
         private string strLigacao;
         private SqlConnection ligacaoBD;
@@ -28,7 +28,6 @@ namespace M14_15_TrabalhoModelo_2018_2019
 
             //verificar se a bd já existe
             if (File.Exists(caminho) == false)
-                //TODO: se não existir criar 
                 criarBD();
             //definir a string de ligação
             strLigacao = ConfigurationManager.ConnectionStrings["sql"].ToString();
@@ -39,6 +38,50 @@ namespace M14_15_TrabalhoModelo_2018_2019
 
         private void criarBD()
         {
+            //nome da bd
+            string nomeBD = System.IO.Path.GetFileNameWithoutExtension(caminho);
+            strLigacao = ConfigurationManager.ConnectionStrings["servidor"].ToString();
+            //abrir a ligação ao servidor
+            ligacaoBD = new SqlConnection(strLigacao);
+            ligacaoBD.Open();
+            //criar a bd
+            string strSQL = $@"CREATE DATABASE {nomeBD} 
+                        ON PRIMARY (NAME={nomeBD}, FILENAME='{caminho}')";
+            this.executaSQL(strSQL);
+            //criar as tabelas
+            ligacaoBD.Close();
+            strLigacao = ConfigurationManager.ConnectionStrings["sql"].ToString();
+            //abrir a ligação ao servidor
+            ligacaoBD = new SqlConnection(strLigacao);
+            ligacaoBD.Open();
+            strSQL = @"create table leitores(
+	                        nleitor int identity primary key,
+	                        nome varchar(40) not null,
+	                        data_nasc date,
+	                        fotografia image,
+	                        ativo bit
+                        )
+
+                        create table livros(
+	                        nlivro int identity primary key,
+	                        nome varchar(100),
+	                        ano int,
+	                        data_aquisicao date,
+	                        preco decimal(4,2),
+	                        capa varchar(300),
+	                        estado bit
+                        )
+
+                        create table emprestimos(
+	                        nemprestimo int identity primary key,
+	                        nlivro int references livros(nlivro),
+	                        nleitor int references leitores(nleitor),
+	                        data_emprestimo date,
+	                        data_devolve date,
+	                        estado bit
+                        )";
+            this.executaSQL(strSQL);
+            ligacaoBD.Close();
         }
         ~BaseDados()
         {

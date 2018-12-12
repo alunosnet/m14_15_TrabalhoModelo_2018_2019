@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace M14_15_TrabalhoModelo_2018_2019
@@ -67,7 +60,18 @@ namespace M14_15_TrabalhoModelo_2018_2019
 
         private void consultasToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void consultasToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
             f_consultas f = new f_consultas(bd);
+            f.Show();
+        }
+
+        private void históricoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            f_historico f = new f_historico(bd);
             f.Show();
         }
     }

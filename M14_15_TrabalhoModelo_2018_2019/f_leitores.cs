@@ -34,7 +34,9 @@ namespace M14_15_TrabalhoModelo_2018_2019
             int nrPaginas =(int)Math.Ceiling(nrLeitores /(float) registosPorPagina);
             for (int i = 1; i <= nrPaginas; i++)
                 cb_pagina.Items.Add(i);
-
+            //para evitar erros qd não há leitores
+            if (cb_pagina.Items.Count==0)
+                cb_pagina.Items.Add("1");
             cb_pagina.SelectedIndex = 0;
         }
 

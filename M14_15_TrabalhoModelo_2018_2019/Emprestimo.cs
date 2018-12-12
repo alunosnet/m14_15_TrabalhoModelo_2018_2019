@@ -146,6 +146,13 @@ namespace M14_15_TrabalhoModelo_2018_2019
 
             return bd.devolveSQL(sql);
         }
-        
+        public DataTable ListaEmprestimos(BaseDados bd, int nleitor)
+        {
+            string sql = "Select nome from livros inner join emprestimos on livros.nlivro=emprestimos.nlivro where nleitor=@nleitor";
+            List<SqlParameter> parametros = new List<SqlParameter>() {
+                    new SqlParameter(){ParameterName="@nleitor",SqlDbType=SqlDbType.Int,Value=nleitor},
+                };
+            return bd.devolveSQL(sql, parametros);
+        }
     }
 }
